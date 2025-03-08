@@ -15,44 +15,27 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/simulador-do-caos
+        image: fabricioveronez/pagina-exemplo:green
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         resources:
           requests:
-            cpu: 500m
-            memory: 512Mi
+            memory: "200Mi"
+            cpu: "250m"
           limits:
-            cpu: 500m
-            memory: 512Mi
+            memory: "500Mi"
+            cpu: "500m"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: web
+  namespace: web
 spec:
   selector:
     app: web
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   type: LoadBalancer
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: web
-spec:
-  maxReplicas: 10
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: web
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50

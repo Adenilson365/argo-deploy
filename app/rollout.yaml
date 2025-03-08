@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: web
+  namespace: web
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: fabricioveronez/pagina-exemplo:blue
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+  strategy:
+    blueGreen:
+      activeService: web
+      previewService: web-preview
+      autoPromotionEnabled: false
+      scaleDownDelaySeconds: 30
+      scaleDownDelayRevisionLimit: 2
