@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/pagina-exemplo:blue
+        image: fabricioveronez/web-color:green
         ports:
         - containerPort: 80
         resources:
@@ -28,8 +28,35 @@ spec:
 
   strategy:
     blueGreen:
-      activeService: web
-      previewService: web-preview
+      activeService: active-service
+      previewService: preview-service
       autoPromotionEnabled: false
       scaleDownDelaySeconds: 30
       scaleDownDelayRevisionLimit: 2
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: preview-service
+  namespace: web
+spec:
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: active-service
+  namespace: web
+spec:
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
