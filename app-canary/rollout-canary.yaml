@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: web-canary
-  namespace: web
+  namespace: web-canary
 spec:
   selector:
     app: web
