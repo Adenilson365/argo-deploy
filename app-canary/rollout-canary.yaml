@@ -25,16 +25,13 @@ spec:
           limits:
             memory: "500Mi"
             cpu: "500m"
-
   strategy:
     canary: 
       steps:
         - setWeight: 25
-          pause: 
-            duration: 30s
+          pause: {}
         - setWeight: 50
-          pause: 
-            duration: 30s
+          pause: {}
         - setWeight: 100
 --- 
 apiVersion: v1
