@@ -4,7 +4,7 @@ metadata:
   name: web-canary
   namespace: web-canary
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: web
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/web-color:blue
+        image: fabricioveronez/web-color:green
         ports:
         - containerPort: 80
         resources:
