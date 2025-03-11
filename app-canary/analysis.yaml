@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: web-canary-analysis
+  namespace: web-canary
+spec:
+  metrics:
+  - name: success-rate
+    interval: 30s
+    count: 6 
+    successCondition: result >= 0.95
+    failureCondition: result < 0.80
+    provider:
+      prometheus:
+        address: http://prometheus-server.monitoring.svc.cluster.local:9090
+        query: |
+          scalar(
+          sum(rate(flask_http_request_total{app="web", status=~"2.."}[2m])) 
+          / 
+          sum(rate(flask_http_request_total{app="web"}[2m]))
+          )
