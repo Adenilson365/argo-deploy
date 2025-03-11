@@ -33,11 +33,13 @@ spec:
     canary: 
       steps:
         - setWeight: 25
-        - pause: 
-            duration: 30s
+        - analysis:
+            templates:
+            - name: web-canary-analysis
         - setWeight: 50
-        - pause: 
-            duration: 30s
+        - analysis:
+            templates:
+            - name: web-canary-analysis
         - setWeight: 100
 --- 
 apiVersion: v1
