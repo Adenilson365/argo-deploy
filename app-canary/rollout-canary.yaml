@@ -35,11 +35,11 @@ spec:
         - setWeight: 25
         - analysis:
             templates:
-            - name: web-canary-analysis
+            - templateName: web-canary-analysis
         - setWeight: 50
         - analysis:
             templates:
-            - name: web-canary-analysis
+            - templateName: web-canary-analysis
         - setWeight: 100
 --- 
 apiVersion: v1
